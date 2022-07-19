@@ -36,7 +36,7 @@ Example from `/src/components/HelloWorld.tsx` (converted from the origin `HelloW
 
 Basically, its one `tsx` file 
 
-```ts
+```tsx
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -61,7 +61,7 @@ Here its all standard stuff, the only trick is we return the `count` and `msg` f
 
 The most import thing is here (this will guarantee works correctly with Vue.js)
 
-```ts 
+```tsx
 export default defineComponent({
   // see above 
   render() {
@@ -72,8 +72,7 @@ export default defineComponent({
         <div class="card">
           <button type="button" onClick={ () => this.count++ }>count is { this.count }</button>
           <p>
-            Edit
-            <code>components/HelloWorld.vue</code> to test HMR
+            Edit <code>components/HelloWorld.vue</code> to test HMR
           </p>
         </div>
         // ... skip a bunch of text here
@@ -85,18 +84,156 @@ export default defineComponent({
 Couple things to note:
 
 1. Double curly brackets becomes single 
-2. You can access the property return from `setup` via this. 
+2. You can access the property return from `setup` via `this`
+3. The event handling needs to use `on` + event name instead of the Vue shorthand 
 
 And Vue won't throw error about _Invalid VNode type: undefined_ 
 You will get the above mentioned error if you return the JSX from the `setup`
 
+One other thing is - see mom, no `.value`. You don't actually need to access the property like `this.count.value` from the `ref`. Added bonus.
+
 ## Using JSX with pinia 
 
+One thing nice about [pinia](https://pinia.vuejs.org/) is the setup (from `src/main.ts`)
+
+```ts
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App'
+// create the pinia instance
+const pinia = createPinia()
+const app = createApp(App)
+app.use(pinia)
+// skip a bunch of code 
+```
+
 This is pretty simple actually. 
+First we take a look at the store from `src/stores/pinia/msg.ts` 
+
+```ts
+import { defineStore } from 'pinia'
+
+export const useMsgStore = defineStore('msg', {
+  state: () => ({
+    msg: 'pinia message'
+  }),
+  getters: {
+    stockMsg: (state) => 'stock ' + state.msg
+  },
+  actions: {
+    write(newMsg: string) {
+      this.msg = newMsg
+    }
+  }
+})
+```
+
+It's pretty straight forward; now take a look at the jsx file 
 Example from `src/components/CompWithPinia.tsx` 
 
+```tsx
+import { defineComponent } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useMsgStore } from '../stores/pinia/msg'
+
+export default defineComponent({
+  name: 'CompWithPinia',
+  setup() {
+    const store = useMsgStore()
+    const { msg, stockMsg } = storeToRefs(store)
+
+    const changeText = (e: Event) => {
+      const value = (e.target as HTMLInputElement).value
+      store.write(value)
+    }
+
+    return {
+      msg, 
+      stockMsg,
+      changeText
+    }
+  },
+  render() {
+    return  (
+      <div>
+        <h3>CompWithState using pinia</h3>
+        msg: { this.msg }
+        <br />
+        stockMsg: { this.stockMsg }
+        <br />
+        <input type="text" name="changeMe" onChange={ this.changeText } />
+      </div>
+    )
+  }
+})
+```
+
+Again we are using the `render` property from the `defineComponent` to output the JSX.
+Also using the setup to return the properties that we are interested in, and like the last example, 
+we can access them via the `this` 
+
+One interesting thing to note is the use of `storeToRefs`, if we don't use it then we can't destruct the 
+property from the store directly. They are reactive and we access them without the need of `.value` 
+
+## Using JSX with Vuex 
+
+First take a look at how we setup the [Vuex](https://vuex.vuejs.org/)
+Example from `src/stores/index.ts`, we group together all the namespaced stores and init in one place
+
+```ts
+import { createStore } from 'vuex'
+import msgStore from './msg'
+import numStore from './num'
+
+export const vuexStores = createStore({
+  modules: {
+    msgStore,
+    numStore
+  },
+  strict: false // even in production, do not switch it on, unless you need to deep debug via devTool 
+})
+```
+
+Then in the `src/main.ts` 
+
+```ts 
+// ... 
+import { vuexStores } from './stores'
+
+const app = createApp(App)
+app.use(vuexStores)
+// ...
+```
+
+Now take a look at one of the store defintion file in `src/stores/num.ts`
+
+```ts 
+// for typing 
+export interface NumStoreState {
+  num: number
+}
+// main export 
+export default {
+  state() {
+    return {
+      num: 0
+    }
+  },
+  mutations: {
+    add(state: NumStoreState) {
+      ++state.num
+    }
+  },
+  namespaced: true
+}
+```
+
+Very simple and straight forward, and finally the component `src/components/CompWithVuex.tsx` 
+
+```ts 
 
 
+```
 
 ---
 
