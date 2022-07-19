@@ -8,7 +8,6 @@ export default defineComponent({
   },
   setup(props) {
     const { msg } = props
-    // @NOTE the reactive properties need to expose as count.value in the template
     const count = ref(0)
     
     return {
