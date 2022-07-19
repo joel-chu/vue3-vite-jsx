@@ -1,4 +1,43 @@
-# Vue 3 + TypeScript + Vite
+# Vue 3 + TypeScript + Vite + JSX 
+
+This is a demo project to show how to setup what's in the title, and later we will also add [Vuex](https://vuex.vuejs.org/) and [plop.js](https://plopjs.com) 
+
+## Setup 
+
+```sh
+$ npm create vite@latest
+```
+
+Select `vue-ts` and we have the starting point. 
+
+Now add couple things
+
+```sh
+$ npm add -D @vitejs/plugin-vue-jsx
+```
+
+<small>*I use pnpm instead</small>
+
+Then update your `vite.config.ts`:
+
+```ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+
+export default defineConfig({
+  plugins: [vueJsx(), vue()]
+})
+```
+
+
+---
+
+Joel Chu (c) 2022
+
+---
+
+### Original read me 
 
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
