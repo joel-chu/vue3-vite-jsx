@@ -89,7 +89,7 @@ Couple things to note:
 And Vue won't throw error about _Invalid VNode type: undefined_ 
 You will get the above mentioned error if you return the JSX from the `setup`
 
-One other thing is - see mom, no `.value`. You don't actually need to access the property like `this.count.value` from the `ref`. Added bonus.
+One other thing is - _Look mom, no `.value`_. You don't actually need to access the property like `this.count.value` from the `ref`. Added bonus.
 
 ## Using JSX with pinia 
 
