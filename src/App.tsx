@@ -1,8 +1,12 @@
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue"
 import HelloWorld from './components/HelloWorld'
+// main
 export default defineComponent({
   components: { HelloWorld },
   setup() {
+    const msg = ref('Vite + Vue')
+
+
     return () => (
     <>
       <div>
@@ -13,7 +17,8 @@ export default defineComponent({
           <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
         </a>
       </div>
-      <HelloWorld msg="Vite + Vue" />
+     
+      <HelloWorld msg={ msg.value } />
     </>
     )
   }

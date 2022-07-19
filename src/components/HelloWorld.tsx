@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { ref } from 'vue'
-
+// main
 export default defineComponent({
   name: 'HelloWorld',
   props: {
@@ -8,12 +8,12 @@ export default defineComponent({
   },
   setup(props) {
     const { msg } = props
-
+    // @NOTE the reactive properties need to expose as count.value in the template
     const count = ref(0)
-
+    
     return () => (
     <>
-      <h1>{{ msg }}</h1>
+      <h1>{{ msg }}?</h1>
       <div class="card">
         <button type="button" onClick={ () => count.value++ }>count is { count.value }</button>
         <p>
