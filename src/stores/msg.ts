@@ -10,7 +10,7 @@ export interface msgStoreState {
 export default {
   state() {
     return {
-      msg: ''
+      msg: 'stock message'
     }
   },
   mutations: {

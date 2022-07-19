@@ -1,30 +1,32 @@
-import { defineComponent, ref } from "vue"
-import { useStore } from 'vuex'
+import { defineComponent } from "vue"
 import HelloWorld from './components/HelloWorld'
+import CompWithState from './components/CompWithState'
 // main
 export default defineComponent({
-  components: { HelloWorld },
+  components: { 
+    HelloWorld, 
+    CompWithState
+  },
   setup(_, ctx) {
-    const stores = useStore()
+    // console.log(ctx)
+    // const stores = useStore() // it's useless if you using namespaced
+    // console.log(stores)
+    // const msg = ref('Vite + Vue')
 
-    console.log(stores)
-    const msg = ref('Vite + Vue')
+    const dummyMsg = 'DUMMY MESSAGE'
 
     return () => (
-    <>
+    <div>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" class="logo" alt="Vite logo" />
         </a>
-        <a href="https://vuejs.org/" target="_blank">
-          <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-        </a>
       </div>
-      
-      <input name="msg" />
-
-      <HelloWorld msg={ msg.value } />
-    </>
+      <hr />
+      <HelloWorld msg={ dummyMsg } />
+      <hr />
+      <CompWithState />
+    </div>
     )
   }
 })
