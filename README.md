@@ -231,9 +231,45 @@ export default {
 Very simple and straight forward, and finally the component `src/components/CompWithVuex.tsx` 
 
 ```ts 
+import { defineComponent } from "vue"
+import { mapState, mapMutations } from "vuex"
 
-
+export default defineComponent({
+  name: 'CompWithVuex',
+  computed: {
+    ...mapState('numStore', ['num'])
+  },
+  methods: {
+    ...mapMutations('numStore', ['add'])
+  },
+  setup() {
+    // we don't actually need to use the setup here
+  },
+  render() {
+    return (
+    <div>
+      <p>This component is using Vuex</p>
+      <h2>{ this.num }</h2>
+      <div class="card">
+        <button type="button" onClick={ () => this.add() }>count is { this.num }</button>
+        <p>
+          Edit
+          <code>components/CompWithVuex</code> to test HMR
+        </p>
+      </div>  
+    </div>
+    )
+  }
+})
 ```
+
+Vuex works little bit different from pinia, using the `mapState` and `mapMutations` makes 
+them available in the JSX template. 
+
+## @TODO Testing 
+
+## @TODO plopfile.js putting everything together in a re-usable way
+
 
 ---
 
@@ -257,3 +293,9 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
 
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+
+--- 
+
+Special thanks to [Juju blog](https://juju.one/using-jsx-with-vue3) and 
+[Logrocket](https://blog.logrocket.com/using-jsx-with-vue/) articles, that helps me to 
+understand the how Vue can work with JSX. 
