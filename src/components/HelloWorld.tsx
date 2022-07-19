@@ -18,8 +18,9 @@ export default defineComponent({
   },
   render() {
     return (
-      <div>
+    <div>
       <h1>{ this.msg }</h1>
+      <div>The count is using ref</div>
       <div class="card">
         <button type="button" onClick={ () => this.count++ }>count is { this.count }</button>
         <p>

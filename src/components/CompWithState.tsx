@@ -7,19 +7,27 @@ export default defineComponent({
   setup() {
     const store = useMsgStore()
     const { msg, stockMsg } = storeToRefs(store)
+
+    const changeText = (e: Event) => {
+      const value = (e.target as HTMLInputElement).value
+      store.write(value)
+    }
+
     return {
-      msg, stockMsg
+      msg, 
+      stockMsg,
+      changeText
     }
   },
   render() {
     return  (
       <div>
-        <h3>CompWithState</h3>
+        <h3>CompWithState using pinia</h3>
         msg: { this.msg }
         <br />
         stockMsg: { this.stockMsg }
         <br />
-        <input type="text" name="changeMe" />
+        <input type="text" name="changeMe" onChange={ this.changeText } />
       </div>
     )
   }

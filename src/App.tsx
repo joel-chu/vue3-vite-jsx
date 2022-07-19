@@ -1,11 +1,13 @@
 import { defineComponent } from "vue"
 import HelloWorld from './components/HelloWorld'
 import CompWithState from './components/CompWithState'
+import CompWithVuex from './components/CompWithVuex'
 // main
 export default defineComponent({
   components: { 
     HelloWorld, 
-    CompWithState
+    CompWithState,
+    CompWithVuex
   },
   setup(_, ctx) {
     // console.log(ctx)
@@ -26,6 +28,8 @@ export default defineComponent({
       <HelloWorld msg={ dummyMsg } />
       <hr />
       <CompWithState />
+      <hr />
+      <CompWithVuex />
     </div>
     )
   }

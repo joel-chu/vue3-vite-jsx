@@ -10,6 +10,7 @@ export const useMsgStore = defineStore('msg', {
   },
   actions: {
     write(newMsg: string) {
+      // console.log('store.write', newMsg)
       this.msg = newMsg
     }
   }
