@@ -30,6 +30,73 @@ export default defineConfig({
 })
 ```
 
+## Using JSX with ref 
+
+Example from `/src/components/HelloWorld.tsx` (converted from the origin `HelloWorld.vue`)
+
+Basically, its one `tsx` file 
+
+```ts
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  },
+  setup(props) {
+    const { msg } = props
+    // @NOTE the reactive properties need to expose as count.value in the template
+    const count = ref(0)
+    return {
+      count, 
+      msg
+    }
+  }
+  // ... skip see next section 
+})
+```
+
+Here its all standard stuff, the only trick is we return the `count` and `msg` from the setup. 
+
+The most import thing is here (this will guarantee works correctly with Vue.js)
+
+```ts 
+export default defineComponent({
+  // see above 
+  render() {
+    return (
+      <div>
+        <h1>{ this.msg }</h1>
+        <div>The count is using ref</div>
+        <div class="card">
+          <button type="button" onClick={ () => this.count++ }>count is { this.count }</button>
+          <p>
+            Edit
+            <code>components/HelloWorld.vue</code> to test HMR
+          </p>
+        </div>
+        // ... skip a bunch of text here
+      </div>
+    )
+  }
+})
+```
+Couple things to note:
+
+1. Double curly brackets becomes single 
+2. You can access the property return from `setup` via this. 
+
+And Vue won't throw error about _Invalid VNode type: undefined_ 
+You will get the above mentioned error if you return the JSX from the `setup`
+
+## Using JSX with pinia 
+
+This is pretty simple actually. 
+Example from `src/components/CompWithPinia.tsx` 
+
+
+
 
 ---
 

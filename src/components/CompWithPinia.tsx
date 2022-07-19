@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useMsgStore } from '../stores/pinia/msg'
 
 export default defineComponent({
-  name: 'CompWithState',
+  name: 'CompWithPinia',
   setup() {
     const store = useMsgStore()
     const { msg, stockMsg } = storeToRefs(store)
