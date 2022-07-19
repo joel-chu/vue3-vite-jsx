@@ -1,11 +1,14 @@
 import { defineComponent, ref } from "vue"
+import { useStore } from 'vuex'
 import HelloWorld from './components/HelloWorld'
 // main
 export default defineComponent({
   components: { HelloWorld },
-  setup() {
-    const msg = ref('Vite + Vue')
+  setup(_, ctx) {
+    const stores = useStore()
 
+    console.log(stores)
+    const msg = ref('Vite + Vue')
 
     return () => (
     <>
@@ -17,7 +20,9 @@ export default defineComponent({
           <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
         </a>
       </div>
-     
+      
+      <input name="msg" />
+
       <HelloWorld msg={ msg.value } />
     </>
     )

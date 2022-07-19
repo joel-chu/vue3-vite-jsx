@@ -4,9 +4,11 @@ import './style.css'
 import App from './App'
 // import the stores 
 import msgStore from './stores/msg'
+import numStore from './stores/num'
 const store = createStore({
   modules: {
-    msgStore
+    msgStore,
+    numStore
   }
 })
 
