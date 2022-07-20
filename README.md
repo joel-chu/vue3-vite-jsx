@@ -307,5 +307,5 @@ You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/
 --- 
 
 Special thanks to [Juju blog](https://juju.one/using-jsx-with-vue3) and 
-[Logrocket](https://blog.logrocket.com/using-jsx-with-vue/) articles, that helps me to 
-understand the how Vue can work with JSX. 
+[LogRocket](https://blog.logrocket.com/using-jsx-with-vue/) articles, that helps me to 
+have a better understand how JSX work within Vue.js. 

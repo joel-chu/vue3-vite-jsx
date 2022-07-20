@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useMsgStore } from '../stores/pinia/msg'
+import { useMsgStore } from '../../stores/pinia/msg'
 
 export default defineComponent({
   name: 'CompWithPinia',

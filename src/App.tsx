@@ -1,7 +1,7 @@
 import { defineComponent } from "vue"
-import HelloWorld from './components/HelloWorld'
-import CompWithPinia from './components/CompWithPinia'
-import CompWithVuex from './components/CompWithVuex'
+import HelloWorld from './components/basics/HelloWorld'
+import CompWithPinia from './components/basics/CompWithPinia'
+import CompWithVuex from './components/basics/CompWithVuex'
 // main
 export default defineComponent({
   components: { 
