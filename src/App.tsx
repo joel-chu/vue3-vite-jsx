@@ -20,16 +20,17 @@ export default defineComponent({
     // const stores = useStore() // it's useless if you using namespaced
     // console.log(stores)
     // const msg = ref('Vite + Vue')
-
-    const dummyMsg = 'Comp using render'
-    const title2 = 'Comp without render'
-    return () => (
-    <div>
-      <MouseTracker>
+    /*
+    <MouseTracker>
       {
         (props: { x: number, y: number }) => <div>{ props.x }, { props.y }</div>
       }
       </MouseTracker>
+    */
+    const dummyMsg = 'Comp using render'
+    const title2 = 'Comp without render'
+    return () => (
+    <div>
       <WidgetOne />
       <div>
         <a href="https://vitejs.dev" target="_blank">
