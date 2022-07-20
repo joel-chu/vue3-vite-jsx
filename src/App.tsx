@@ -2,12 +2,14 @@ import { defineComponent } from "vue"
 import HelloWorld from './components/basics/HelloWorld'
 import CompWithPinia from './components/basics/CompWithPinia'
 import CompWithVuex from './components/basics/CompWithVuex'
+import WidgetOne from "./components/advance/WidgetOne"
 // main
 export default defineComponent({
   components: { 
     HelloWorld, 
     CompWithPinia,
-    CompWithVuex
+    CompWithVuex,
+    WidgetOne
   },
   setup(_, ctx) {
     // console.log(ctx)
@@ -19,10 +21,7 @@ export default defineComponent({
 
     return () => (
     <div>
-      
-
-
-
+      <WidgetOne />
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" class="logo" alt="Vite logo" />
