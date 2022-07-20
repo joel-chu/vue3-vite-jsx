@@ -17,7 +17,7 @@ export default defineComponent({
   },
   render() {
     return (
-    <div>
+    <>
       <h1>{ this.msg }</h1>
       <div>The count is using ref</div>
       <div class="card">
@@ -39,7 +39,7 @@ export default defineComponent({
         in your IDE for a better DX
       </p>
       <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
-    </div>
+    </>
     )
   }
 })

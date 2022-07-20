@@ -11,6 +11,9 @@ export default {
       num: 0
     }
   },
+  getters: {
+    num1(state: NumStoreState) { return state.num } 
+  },
   mutations: {
     add(state: NumStoreState) {
       ++state.num

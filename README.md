@@ -30,11 +30,41 @@ export default defineConfig({
 })
 ```
 
-## Using JSX with ref 
+## Using JSX with ref with and without Render
+
+First off, example from `src/components/basics/CompWithoutRender.tsx` 
+
+```tsx 
+import { defineComponent } from 'vue'
+import { ref } from 'vue'
+// main
+export default defineComponent({
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  },
+  setup(props) {
+    const { msg } = props
+    const count = ref(0)
+    return () => (
+      <div>
+        <h1>{ msg }</h1>
+        <div>The count is using ref</div>
+        <div class="card">
+          <button type="button" onClick={ () => count.value++ }>count is { count.value }</button>
+        </div>
+      </div>
+    )
+  }
+})
+```
+
+It works, the props msg pass directly into the template, and the ref `count` value add correctly.
+But the problem is - we need to unwrap the ref value ourself like this `count.value`. 
+
+How about we change the code, put the template into the render function? 
 
 Example from `/src/components/basics/HelloWorld.tsx` (converted from the origin `HelloWorld.vue`)
-
-Basically, its one `tsx` file 
 
 ```tsx
 import { defineComponent } from 'vue'
@@ -58,11 +88,11 @@ export default defineComponent({
 
 Here its all standard stuff, the only trick is we return the `count` and `msg` from the setup. 
 
-The most import thing is here (this will guarantee works correctly with Vue.js)
+The most import thing is here:
 
 ```tsx
 export default defineComponent({
-  // see above 
+  // skip the setup code, see above 
   render() {
     return (
       <div>
@@ -80,7 +110,7 @@ export default defineComponent({
   }
 })
 ```
-Couple things to note:
+Several things to note:
 
 1. Double curly brackets becomes single 
 2. You can access the property return from `setup` via `this`
@@ -88,7 +118,7 @@ Couple things to note:
 
 And Vue won't throw error about _Invalid VNode type: undefined_ 
 You will get the above mentioned warning (it might become an actual error in the future release) 
-if you return the JSX from the `setup`
+if you return the JSX from the `setup` without a root wrapper
 
 One other thing is - _Look mom, no `.value`_. You don't need to access the property like `this.count.value` from the `ref`. Added bonus.
 
@@ -266,7 +296,7 @@ export default defineComponent({
 Vuex works little bit different from pinia, using the `mapState` and `mapMutations` makes 
 them available in the JSX template automically without the need to export from `setup`. 
 
-## @TODO Higher Order Component
+## Renderless Component
 
 This is what the final assembly of all the components put together, 
 and the top level component govern what this components collection (could call it a View) does. 
@@ -408,7 +438,7 @@ Nothing get passed :S I have been search up and down about how to do that, accor
 
 > If a slot is a scoped slot, arguments passed to the slot functions are available to the slot as its slot props.
 
-Then I tried to make it a scoped slot like so:
+Then I tried to make it a scoped slot like this:
 
 ```tsx
 // in WidgetOne.tsx 
@@ -437,8 +467,6 @@ runtime-core.esm-bundler.js:38
        [Vue warn]: Invalid VNode type: undefined (undefined) 
   at <Anonymous num1=Ref< 0 > txt="This text is from WidgetOne" txt1="This text is from ComptWithSlot" > 
   at <CompWithSlot txt="This text is from WidgetOne" > 
-  at <WidgetOne> 
-  at <App>
 ```
 
 More over, this is really not great, ideally what I really want is:
@@ -460,6 +488,32 @@ data, and it has no view which is what a [renderless component](https://vuejs.or
 
 So to get around the problem with unable to pass props to the sloted component. I tried using the [Provide/Inject](https://vuejs.org/guide/components/provide-inject.html) method 
 
+First we setup a key file, as recommended by Vue.js 
+
+```ts
+export const provideKey1 = Symbol()
+```
+
+Then we change our renderless component `CompWithSlot` like this:
+
+```tsx 
+import { defineComponent, ref, provide } from 'vue'
+import { mapState, mapMutations, useStore } from "vuex"
+import { provideKey1 } from './keys'
+// ... skip 
+setup() {
+  // ... skip
+  const store = useStore()
+  provide(provideKey1, { 
+    num1, 
+    txt, 
+    txt1: 'This text is from ComptWithSlot', 
+    num: store.state.numStore.num
+  })
+  // ... skip 
+}
+
+```
 
 
 
