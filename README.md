@@ -274,7 +274,150 @@ In here, I think we could also call it a Provider / Consumer pattern, the top le
 provide the necessary data and the child component only dealing with the presentation and user interaction.
 When using with router, this is what normally refer to as a Page or Route. 
 
+There is a problem with Vue 3 providing data to a slot. Take a look at this example 
 
+```tsx 
+export default defineComponent({
+  name: 'CompWithSlot',
+  setup() {
+    // prepare data then export it 
+  },
+  render() {
+    return (
+      <div>
+        <h3>CompWithSlot</h3>
+        { this.$slot.default ? this.$slot.default() : 'Nothing'}
+      </div>
+    )
+  }
+})
+```
+
+In another component when we use it this 
+
+```tsx 
+import CompWithSlot from './CompWithSlot' 
+
+export default defineComponent({
+  name: 'CompUsingSlot',
+  components: {
+    CompWithSlot
+  },
+  render() {
+    return (
+      <>
+        <CompUsingSlot>
+          <p>You should see me here</p>
+        </CompUsingSlot>
+      </>
+    )
+  }
+})
+```
+
+And the final render should be something like this:
+
+```html 
+<div>
+  <h3>CompWithSlot</h3>
+  <p>You should see me here</p>
+</div>
+```
+
+Now if we try to provide data from `CompWithSlot`
+
+```tsx 
+export default defineComponent({
+  name: 'CompWithSlot',
+  setup() {
+    const num = ref(0)
+    const txt = 'A piece of text from CompWithSlot'
+    export {
+      num, 
+      txt
+    }
+  },
+  render() {
+    return (
+      <div>
+        <h3>CompWithSlot</h3>
+        { this.$slot.default ? this.$slot.default({ num: this.num, txt: this.txt }) : 'Nothing'}
+      </div>
+    )
+  }
+})
+```
+
+And create a new comp to consume it:
+
+```tsx 
+export default defineComponent({
+  name: 'PropsConsumerComp',
+  props: {
+    num: Number, 
+    txt: String
+  },
+  setup(props) {
+    console.log('See what props do we got', props)
+  },
+  render() {
+    return (
+      <ul>
+        <li>The number is { this.num }</li>
+        <li>The txt is { this.txt }</li>
+      </ul>
+    )
+  }
+})
+```
+
+And we modify the `CompUsingSlot`
+
+```tsx 
+import CompWithSlot from './CompWithSlot' 
+import PropsConsumerComp from './PropsConsumerComp'
+
+export default defineComponent({
+  name: 'CompUsingSlot',
+  components: {
+    CompWithSlot,
+    PropsConsumerComp
+  },
+  render() {
+    return (
+      <>
+        <CompUsingSlot>
+          <PropsConsumerComp /> 
+        </CompUsingSlot>
+      </>
+    )
+  }
+})
+```
+
+_But_ the `console.log` in the `setup` from `PropsConsumerComp` shows 
+```js 
+{
+  num: undefined,
+  txt: undefined,
+  // ... skip a whole bunch of things here
+}
+```
+
+Nothing get passed :S I have been search up and down about how to do that, according to Vue.js V.3 documentation.
+
+> If a slot is a scoped slot, arguments passed to the slot functions are available to the slot as its slot props.
+
+But the example didn't show how you can do that with JSX! All the examples code only work with Vue SFC ... 
+In Vue2 there is a `$scopedSlot` property but it's dropped in Vue3, because when I tried to use it, 
+I get error from Volar about `$scopedSlot` does not exist on `this`. So using scoped slot is an deadend for JSX.
+
+### Provide / Inject 
+
+The reason why we try the above approach is, we want a drop-in-place component that can provide particular 
+data, and it has no view which is what a [renderless component](https://vuejs.org/guide/components/slots.html#scoped-slots) is. It does have a lot of practice use in many scenario. 
+
+So to get around the problem with unable to pass props to the sloted component. I tried using the [Provide/Inject](https://vuejs.org/guide/components/provide-inject.html) method 
 
 ## @TODO Testing 
 
