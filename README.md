@@ -32,7 +32,7 @@ export default defineConfig({
 
 ## Using JSX with ref 
 
-Example from `/src/components/HelloWorld.tsx` (converted from the origin `HelloWorld.vue`)
+Example from `/src/components/basics/HelloWorld.tsx` (converted from the origin `HelloWorld.vue`)
 
 Basically, its one `tsx` file 
 
@@ -129,7 +129,7 @@ export const useMsgStore = defineStore('msg', {
 ```
 
 It's pretty straight forward; now take a look at the jsx file 
-Example from `src/components/CompWithPinia.tsx` 
+Example from `src/components/basics/CompWithPinia.tsx` 
 
 ```tsx
 import { defineComponent } from 'vue'
@@ -228,7 +228,7 @@ export default {
 }
 ```
 
-Very simple and straight forward, and finally the component `src/components/CompWithVuex.tsx` 
+Very simple and straight forward, and finally the component `src/components/basics/CompWithVuex.tsx` 
 
 ```ts 
 import { defineComponent } from "vue"
@@ -264,12 +264,12 @@ export default defineComponent({
 ```
 
 Vuex works little bit different from pinia, using the `mapState` and `mapMutations` makes 
-them available in the JSX template. 
+them available in the JSX template automically without the need to export from `setup`. 
 
-## @TODO Higher Order Component (View) 
+## @TODO Higher Order Component
 
 This is what the final assembly of all the components put together, 
-and the top level component govern what this components collection (View) does. 
+and the top level component govern what this components collection (could call it a View) does. 
 In here, I think we could also call it a Provider / Consumer pattern, the top level component 
 provide the necessary data and the child component only dealing with the presentation and user interaction.
 When using with router, this is what normally refer to as a Page or Route. 

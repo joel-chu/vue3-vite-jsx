@@ -35,8 +35,8 @@ export default defineComponent({
   render() {
     return () => (
       <div style="display: block; background-color: yellow; min-height: 300px">
-        <button></button>
-
+        <button onClick={ this.add }>Click to add { this.num }</button>
+        <br />
         { this.$slots.default ? this.$slots.default(Object.assign(this.props, { num: this.num })) : '' }
       </div>
     )
