@@ -408,9 +408,50 @@ Nothing get passed :S I have been search up and down about how to do that, accor
 
 > If a slot is a scoped slot, arguments passed to the slot functions are available to the slot as its slot props.
 
-But the example didn't show how you can do that with JSX! All the examples code only work with Vue SFC ... 
-In Vue2 there is a `$scopedSlot` property but it's dropped in Vue3, because when I tried to use it, 
-I get error from Volar about `$scopedSlot` does not exist on `this`. So using scoped slot is an deadend for JSX.
+Then I tried to make it a scoped slot like so:
+
+```tsx
+// in WidgetOne.tsx 
+// first try 
+<CompWithSlot v-slot="propsByMe">
+  <ChildInSlot { ...propsByMe } />
+</CompWithSlot>
+// second try 
+<CompWithSlot>
+  {
+    (props: any) => (
+      <>
+        <ChildInSlot { ...props } />
+      </>  
+    )
+  }
+</CompWithSlot>
+```
+
+It works (kind of), the text is showing but not the number, because the props expect number not a ref. 
+That's easy fix. Unfortunately, console also throw the following error: 
+
+```txt 
+runtime-core.esm-bundler.js:38 
+        
+       [Vue warn]: Invalid VNode type: undefined (undefined) 
+  at <Anonymous num1=Ref< 0 > txt="This text is from WidgetOne" txt1="This text is from ComptWithSlot" > 
+  at <CompWithSlot txt="This text is from WidgetOne" > 
+  at <WidgetOne> 
+  at <App>
+```
+
+More over, this is really not great, ideally what I really want is:
+
+```html 
+<CompWithSlot>
+  <ChildInSlot />
+</CompWithSlot>
+```
+
+`ChildInSlot` gets the props provided by `CompWithSlot` ...
+
+Therefore, I am giving up on this path.
 
 ### Provide / Inject 
 
@@ -418,6 +459,10 @@ The reason why we try the above approach is, we want a drop-in-place component t
 data, and it has no view which is what a [renderless component](https://vuejs.org/guide/components/slots.html#scoped-slots) is. It does have a lot of practice use in many scenario. 
 
 So to get around the problem with unable to pass props to the sloted component. I tried using the [Provide/Inject](https://vuejs.org/guide/components/provide-inject.html) method 
+
+
+
+
 
 ## @TODO Testing 
 

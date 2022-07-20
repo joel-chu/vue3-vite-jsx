@@ -1,15 +1,19 @@
 import { defineComponent } from "vue"
 import HelloWorld from './components/basics/HelloWorld'
+import CompWithoutRender from "./components/basics/CompWithoutRender"
 import CompWithPinia from './components/basics/CompWithPinia'
 import CompWithVuex from './components/basics/CompWithVuex'
 import WidgetOne from "./components/advance/WidgetOne"
+import MouseTracker from "./components/advance/MouseTracker"
 // main
 export default defineComponent({
   components: { 
     HelloWorld, 
+    CompWithoutRender,
     CompWithPinia,
     CompWithVuex,
-    WidgetOne
+    WidgetOne,
+    MouseTracker
   },
   setup(_, ctx) {
     // console.log(ctx)
@@ -17,16 +21,22 @@ export default defineComponent({
     // console.log(stores)
     // const msg = ref('Vite + Vue')
 
-    const dummyMsg = 'DUMMY MESSAGE'
-
+    const dummyMsg = 'Comp using render'
+    const title2 = 'Comp without render'
     return () => (
     <div>
+      <MouseTracker>
+      {
+        (props: { x: number, y: number }) => <div>{ props.x }, { props.y }</div>
+      }
+      </MouseTracker>
       <WidgetOne />
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" class="logo" alt="Vite logo" />
         </a>
       </div>
+      <CompWithoutRender msg={ title2 } />
       <hr />
       <HelloWorld msg={ dummyMsg } />
       <hr />

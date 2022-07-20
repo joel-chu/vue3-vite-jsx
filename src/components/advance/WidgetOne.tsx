@@ -12,10 +12,12 @@ export default defineComponent({
   render() {
     return (
     <>
-      <h3>Widget One</h3>
+      <h3>Part One - using provider with Vuex</h3>
       <CompWithSlot txt={ this.myTxt }>
         <ChildInSlot />
       </CompWithSlot>
+      <h3>Part Two - using provider with Pinia</h3>
+      
     </>
     )
   }

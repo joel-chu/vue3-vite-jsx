@@ -1,5 +1,6 @@
 import { defineComponent, ref, provide } from 'vue'
-import { mapState, mapMutations, useStore } from "vuex"
+import { storeToRefs } from 'pinia'
+import { useNumStore } from '../../stores/pinia/num'
 import { provideKey1 } from './keys'
 
 export default defineComponent({
@@ -7,15 +8,10 @@ export default defineComponent({
   props: {
     txt: String
   },
-  computed: {
-    ...mapState('numStore', ['num'])
-  },
-  methods: {
-    ...mapMutations('numStore', ['add'])
-  },
   setup(props) {
-    const store = useStore()
-    
+    const store = useNumStore()
+    const { num, display } = storeToRefs(store)
+    const add = store.add 
     const { txt } = props
     let ctn = 0
     const num1 = ref(0)
@@ -32,15 +28,21 @@ export default defineComponent({
       num1, 
       txt, 
       txt1: 'This text is from ComptWithSlot', 
-      num: store.state.numStore.num
+      num,
+      add
     })
 
-    return {}
+    return {
+      display,
+      num,
+      add
+    }
   },
   render() {
     return (
       <div style="display: block; background-color: yellow; min-height: 200px">
         <h4>{ this.txt }</h4>
+        <p>{ this.display }</p>
         <button onClick={ this.add }>
           Click to add <strong style="color:red">{ this.num }</strong>
         </button>

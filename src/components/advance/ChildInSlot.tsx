@@ -11,7 +11,7 @@ export default defineComponent({
   },
   setup() {
     const passingProps = inject(provideKey1) as object
-    
+    // console.log(passingProps)
     return { ...passingProps }
   },
   render() {
