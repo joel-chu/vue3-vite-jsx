@@ -87,9 +87,10 @@ Couple things to note:
 3. The event handling needs to use `on` + event name instead of the Vue shorthand 
 
 And Vue won't throw error about _Invalid VNode type: undefined_ 
-You will get the above mentioned error if you return the JSX from the `setup`
+You will get the above mentioned warning (it might become an actual error in the future release) 
+if you return the JSX from the `setup`
 
-One other thing is - _Look mom, no `.value`_. You don't actually need to access the property like `this.count.value` from the `ref`. Added bonus.
+One other thing is - _Look mom, no `.value`_. You don't need to access the property like `this.count.value` from the `ref`. Added bonus.
 
 ## Using JSX with pinia 
 
@@ -264,6 +265,16 @@ export default defineComponent({
 
 Vuex works little bit different from pinia, using the `mapState` and `mapMutations` makes 
 them available in the JSX template. 
+
+## @TODO Higher Order Component (View) 
+
+This is what the final assembly of all the components put together, 
+and the top level component govern what this components collection (View) does. 
+In here, I think we could also call it a Provider / Consumer pattern, the top level component 
+provide the necessary data and the child component only dealing with the presentation and user interaction.
+When using with router, this is what normally refer to as a Page or Route. 
+
+
 
 ## @TODO Testing 
 
