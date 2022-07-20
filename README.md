@@ -30,7 +30,9 @@ export default defineConfig({
 })
 ```
 
-## Using JSX with ref with and without Render
+## PART I - BASIC 
+
+### Using JSX with ref with and without Render
 
 First off, example from `src/components/basics/CompWithoutRender.tsx` 
 
@@ -122,7 +124,7 @@ if you return the JSX from the `setup` without a root wrapper
 
 One other thing is - _Look mom, no `.value`_. You don't need to access the property like `this.count.value` from the `ref`. Added bonus.
 
-## Using JSX with pinia 
+### Using JSX with pinia 
 
 One thing nice about [pinia](https://pinia.vuejs.org/) is the setup (from `src/main.ts`)
 
@@ -205,7 +207,7 @@ we can access them via the `this`
 One interesting thing to note is the use of `storeToRefs`, if we don't use it then we can't destruct the 
 property from the store directly. They are reactive and we access them without the need of `.value` 
 
-## Using JSX with Vuex 
+### Using JSX with Vuex 
 
 First take a look at how we setup the [Vuex](https://vuex.vuejs.org/)
 Example from `src/stores/index.ts`, we group together all the namespaced stores and init in one place
@@ -296,7 +298,9 @@ export default defineComponent({
 Vuex works little bit different from pinia, using the `mapState` and `mapMutations` makes 
 them available in the JSX template automically without the need to export from `setup`. 
 
-## Renderless Component
+## PART II - ADVANCE 
+
+### Renderless Component
 
 This is what the final assembly of all the components put together, 
 and the top level component govern what this components collection (could call it a View) does. 
