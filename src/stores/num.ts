@@ -12,7 +12,7 @@ export default {
     }
   },
   getters: {
-    num1(state: NumStoreState) { return state.num } 
+    num1: (state: NumStoreState) => state.num 
   },
   mutations: {
     add(state: NumStoreState) {

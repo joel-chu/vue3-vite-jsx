@@ -494,6 +494,8 @@ First we setup a key file, as recommended by Vue.js
 export const provideKey1 = Symbol()
 ```
 
+#### Using Vuex store
+
 Then we change our renderless component `CompWithSlot` like this:
 
 ```tsx 
@@ -508,15 +510,119 @@ setup() {
     num1, 
     txt, 
     txt1: 'This text is from ComptWithSlot', 
-    num: store.state.numStore.num
+    num: store.state.numStore.num // more about this later
   })
   // ... skip 
 }
 
 ```
 
+It works ... apart from the `num`. It only show `0` and when we press the button. The `num` is not updated. 
+It seems that the Vuex store state is no longer reactive. So we have to make some changes:
 
+```tsx 
+import { defineComponent, ref, provide, toRef } from 'vue'
+// ... skip 
+// instead of passing the store.state.numStore.num directly
+setup() {
 
+  const store = useStore()
+  const num = toRef(store.state.numStore, 'num')
+  provide(provideKey1, { 
+    num1, 
+    txt, 
+    txt1: 'This text is from ComptWithSlot', 
+    num
+  })
+}
+```
+
+We use the `toRef` method to create a proxy to the `store.state.numStore.num`. And as you can see 
+from the example, when we click the first button the number updated, if we click the other one that is 
+connected to the same store, it's also updated. That in effect, creates a two way binding in multiple 
+instances. 
+
+#### Using Pinia store 
+
+Here is the num store from `src/stores/pinia/num.ts`
+
+```ts
+import { defineStore } from 'pinia'
+
+export const useNumStore = defineStore('num', {
+  state: () => ({
+    num: 0
+  }),
+  actions: {
+    add() {
+      this.num++
+    }
+  }
+})
+```
+
+Then the component `src/components/advance/CompWithSlotPinia.tsx`
+
+```tsx
+import { defineComponent, ref, provide } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useNumStore } from '../../stores/pinia/num'
+import { provideKey1 } from './keys'
+
+export default defineComponent({
+  name: 'CompWithSlot',
+  props: {
+    txt: String
+  },
+  setup(props) {
+    const store = useNumStore()
+    const { num } = storeToRefs(store)
+    const add = store.add 
+    const { txt } = props
+    let ctn = 0
+    const num1 = ref(0)
+    const timer = setInterval(() => {
+      ++num1.value
+      ++ctn 
+      if (ctn >= 10) {
+        ctn = 0
+        num1.value = 0
+      } 
+    }, 1000)
+
+    provide(provideKey1, { 
+      num1, 
+      txt, 
+      txt1: 'This text is from ComptWithSlot', 
+      num,
+      add
+    })
+
+    return {
+      num,
+      add
+    }
+  },
+  render() {
+    return (
+      <div style="display: block; background-color: yellow; min-height: 200px; color: blue">
+        <h4>{ this.txt }</h4>
+        <p>{ this.num }</p>
+        <button onClick={ this.add }>
+          Click to add <strong style="color:red">{ this.num }</strong>
+        </button>
+        <br />
+        
+        { this.$slots.default ? this.$slots.default() : 'Nothing' }
+
+      </div>
+    )
+  }
+})
+```
+
+It just works; one thing to note is the use of `storeToRefs`, just like what we did with the Vuex store,
+turn the state from Pinia store into a two ways bining reactive property. 
 
 ## @TODO Testing 
 

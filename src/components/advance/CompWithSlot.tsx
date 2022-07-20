@@ -1,4 +1,4 @@
-import { defineComponent, ref, provide } from 'vue'
+import { defineComponent, ref, provide, toRef } from 'vue'
 import { mapState, mapMutations, useStore } from "vuex"
 import { provideKey1 } from './keys'
 
@@ -28,18 +28,20 @@ export default defineComponent({
       } 
     }, 1000)
 
+    const num = toRef(store.state.numStore, 'num')
+
     provide(provideKey1, { 
       num1, 
       txt, 
       txt1: 'This text is from ComptWithSlot', 
-      num: store.state.numStore.num
+      num
     })
 
     return {}
   },
   render() {
     return (
-      <div style="display: block; background-color: yellow; min-height: 200px">
+      <div style="display: block; background-color: yellow; min-height: 200px; color: black">
         <h4>{ this.txt }</h4>
         <button onClick={ this.add }>
           Click to add <strong style="color:red">{ this.num }</strong>

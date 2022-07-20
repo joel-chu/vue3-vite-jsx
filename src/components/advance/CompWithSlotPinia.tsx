@@ -10,7 +10,7 @@ export default defineComponent({
   },
   setup(props) {
     const store = useNumStore()
-    const { num, display } = storeToRefs(store)
+    const { num } = storeToRefs(store)
     const add = store.add 
     const { txt } = props
     let ctn = 0
@@ -33,16 +33,15 @@ export default defineComponent({
     })
 
     return {
-      display,
       num,
       add
     }
   },
   render() {
     return (
-      <div style="display: block; background-color: yellow; min-height: 200px">
+      <div style="display: block; background-color: yellow; min-height: 200px; color: blue">
         <h4>{ this.txt }</h4>
-        <p>{ this.display }</p>
+        <p>{ this.num }</p>
         <button onClick={ this.add }>
           Click to add <strong style="color:red">{ this.num }</strong>
         </button>
