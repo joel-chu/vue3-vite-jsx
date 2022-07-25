@@ -1,21 +1,24 @@
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
 import HelloWorld from './components/basics/HelloWorld'
-import CompWithoutRender from "./components/basics/CompWithoutRender"
+import CompWithoutRender from './components/basics/CompWithoutRender'
 import CompWithPinia from './components/basics/CompWithPinia'
 import CompWithVuex from './components/basics/CompWithVuex'
-import WidgetOne from "./components/advance/WidgetOne"
-import MouseTracker from "./components/advance/MouseTracker"
+import WidgetOne from './components/advance/WidgetOne'
+import MouseTracker from './components/advance/MouseTracker'
+import SuspenseParentVue from './components/advance/SuspenseParentVue.vue'
+
 // main
 export default defineComponent({
-  components: { 
-    HelloWorld, 
+  components: {
+    HelloWorld,
     CompWithoutRender,
     CompWithPinia,
     CompWithVuex,
     WidgetOne,
-    MouseTracker
+    MouseTracker,
+    SuspenseParentVue
   },
-  setup(_, ctx) {
+  setup (_, ctx) {
     // console.log(ctx)
     // const stores = useStore() // it's useless if you using namespaced
     // console.log(stores)
@@ -30,27 +33,27 @@ export default defineComponent({
     const dummyMsg = 'Comp using render'
     const title2 = 'Comp without render'
     return () => (
-    <div>
-      <WidgetOne />
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" class="logo" alt="Vite logo" />
-        </a>
+        <WidgetOne />
+        <div>
+          <a href='https://vitejs.dev' target='_blank' rel='noopener noreferrer'>
+            <img src='/vite.svg' class='logo' alt='Vite logo' />
+          </a>
+        </div>
+        <CompWithoutRender msg={title2} />
+        <hr />
+        <HelloWorld msg={dummyMsg} />
+        <hr />
+        <CompWithPinia />
+        <hr />
+        <CompWithVuex />
       </div>
-      <CompWithoutRender msg={ title2 } />
-      <hr />
-      <HelloWorld msg={ dummyMsg } />
-      <hr />
-      <CompWithPinia />
-      <hr />
-      <CompWithVuex />
-    </div>
     )
   }
 })
 
 
-/* one of the draw back with jsx - no where to define your scope styling 
+/* one of the draw back with jsx - no where to define your scope styling
 @TODO need to confirm
 <style scoped>
 .logo {
