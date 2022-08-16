@@ -558,6 +558,7 @@ export const useNumStore = defineStore('num', {
     num: 0
   }),
   actions: {
+    // @NOTE you can not use arrow function here otherwise the `this` won't work!
     add() {
       this.num++
     }
@@ -627,6 +628,10 @@ export default defineComponent({
 
 It just works; one thing to note is the use of `storeToRefs`, just like what we did with the Vuex store,
 turn the state from Pinia store into a two ways bining reactive property. 
+
+## Using Vue built-in component in JSX 
+
+Example and [documentation here](./src/components/advance/CompWithBuiltIn/README.md)
 
 ## @TODO Testing 
 

@@ -4,9 +4,9 @@ import CompWithoutRender from './components/basics/CompWithoutRender'
 import CompWithPinia from './components/basics/CompWithPinia'
 import CompWithVuex from './components/basics/CompWithVuex'
 import WidgetOne from './components/advance/WidgetOne'
-import MouseTracker from './components/advance/MouseTracker'
-import SuspenseParentVue from './components/advance/SuspenseParentVue.vue'
-
+// import MouseTracker from './components/advance/MouseTracker'
+// import SuspenseParentVue from './components/advance/SuspenseParentVue.vue'
+import CompWithBuiltIn from './components/advance/CompWithBuiltIn/CompWithBuiltIn'
 // main
 export default defineComponent({
   components: {
@@ -15,8 +15,9 @@ export default defineComponent({
     CompWithPinia,
     CompWithVuex,
     WidgetOne,
-    MouseTracker,
-    SuspenseParentVue
+    // MouseTracker,
+    // SuspenseParentVue,
+    CompWithBuiltIn
   },
   setup (_, ctx) {
     // console.log(ctx)
@@ -47,6 +48,8 @@ export default defineComponent({
         <CompWithPinia />
         <hr />
         <CompWithVuex />
+        <hr />
+        <CompWithBuiltIn />
       </div>
     )
   }

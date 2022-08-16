@@ -1,6 +1,5 @@
 // recreate the HelloWorld example without the render 
-import { defineComponent } from 'vue'
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 // main
 export default defineComponent({
   name: 'HelloWorld',
