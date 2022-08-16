@@ -6,6 +6,9 @@ export default defineComponent({
   props: {
     msg: String
   },
+  methods: {
+    add: () => this.count++
+  },
   setup(props) {
     const { msg } = props
     const count = ref(0)
@@ -21,7 +24,7 @@ export default defineComponent({
       <h1>{ this.msg }</h1>
       <div>The count is using ref</div>
       <div class="card">
-        <button type="button" onClick={ () => this.count++ }>count is { this.count }</button>
+        <button type="button" onClick={ () => this.add() }>count is { this.count }</button>
         <p>
           Edit
           <code>components/HelloWorld.vue</code> to test HMR
