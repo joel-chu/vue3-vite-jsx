@@ -7,7 +7,11 @@ export default defineComponent({
     msg: String
   },
   methods: {
-    add: () => this.count++
+    // @NOTE, when you need to call `this` 
+    // you can not use arrow function! 
+    add() { 
+      this.count++
+    }
   },
   setup(props) {
     const { msg } = props

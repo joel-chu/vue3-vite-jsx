@@ -54,7 +54,8 @@ export default defineComponent({
 
 
 /* one of the draw back with jsx - no where to define your scope styling
-@TODO need to confirm
+the only way is to have an external styleshseet with your own scope 
+
 <style scoped>
 .logo {
   height: 6em;
