@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/*
 import { defineConfig } from "cypress";
 
 export default defineConfig({
@@ -15,7 +15,7 @@ export default defineConfig({
     },
   },
 });
-=======
+*/
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -26,4 +26,3 @@ export default defineConfig({
     }
   }
 })
->>>>>>> 17d631a (adding cypress to the project)
