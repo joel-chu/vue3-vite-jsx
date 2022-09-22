@@ -11,10 +11,9 @@ export default defineComponent({
   methods: {
     load() {
       const self = this;
-      fetch("/vite.svg")
+      fetch("vite.svg")
         .then(res => res.text())
         .then(str => {
-          console.log(str);
           self.content = str;
         })
     }
