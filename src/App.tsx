@@ -1,4 +1,7 @@
 import { defineComponent } from 'vue'
+
+import LoadFile from './components/advance/LoadFile.vue'
+
 import HelloWorld from './components/basics/HelloWorld'
 import CompWithoutRender from './components/basics/CompWithoutRender'
 import CompWithPinia from './components/basics/CompWithPinia'
@@ -10,6 +13,7 @@ import CompWithBuiltIn from './components/advance/CompWithBuiltIn/CompWithBuiltI
 // main
 export default defineComponent({
   components: {
+    LoadFile,
     HelloWorld,
     CompWithoutRender,
     CompWithPinia,
@@ -19,7 +23,7 @@ export default defineComponent({
     // SuspenseParentVue,
     CompWithBuiltIn
   },
-  setup (_, ctx) {
+  setup (/* _, ctx */) {
     // console.log(ctx)
     // const stores = useStore() // it's useless if you using namespaced
     // console.log(stores)
@@ -35,6 +39,7 @@ export default defineComponent({
     const title2 = 'Comp without render'
     return () => (
       <div>
+        <LoadFile />
         <WidgetOne />
         <CompWithoutRender msg={title2} />
         <hr />
@@ -49,8 +54,6 @@ export default defineComponent({
     )
   }
 })
-
-
 /* one of the draw back with jsx - no where to define your scope styling
 the only way is to have an external styleshseet with your own scope
 
