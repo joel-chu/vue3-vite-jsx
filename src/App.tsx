@@ -36,11 +36,6 @@ export default defineComponent({
     return () => (
       <div>
         <WidgetOne />
-        <div>
-          <a href='https://vitejs.dev' target='_blank' rel='noopener noreferrer'>
-            <img src='/vite.svg' class='logo' alt='Vite logo' />
-          </a>
-        </div>
         <CompWithoutRender msg={title2} />
         <hr />
         <HelloWorld msg={dummyMsg} />
@@ -57,7 +52,7 @@ export default defineComponent({
 
 
 /* one of the draw back with jsx - no where to define your scope styling
-the only way is to have an external styleshseet with your own scope 
+the only way is to have an external styleshseet with your own scope
 
 <style scoped>
 .logo {
