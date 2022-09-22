@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 // recreate the HelloWorld example without the render 
-=======
-// recreate the HelloWorld example without the render
->>>>>>> 17d631a (adding cypress to the project)
 import { defineComponent, ref } from 'vue'
 // main
 export default defineComponent({
